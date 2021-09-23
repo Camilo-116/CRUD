@@ -1,0 +1,36 @@
+{
+  "name": "crud",
+  "version": "1.0.0",
+  "description": "CRUD made in Javascript, React and MariaDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlejandroBlanco2001/CRUD.git"
+  },
+  "keywords": [
+    "Javascript",
+    "CRUD",
+    "Node",
+    "JS",
+    "React",
+    "MariaDB"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlejandroBlanco2001/CRUD/issues"
+  },
+  "homepage": "https://github.com/AlejandroBlanco2001/CRUD#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mariadb": "^2.5.4",
+    "react": "^17.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
