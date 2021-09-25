@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+// Conection with MariaDB
+const mariaDB_connector = require('./mariaDB_connector.js');
+
 // Static folder with images
 app.use(express.static(__dirname + 'src/images'))
 
@@ -23,3 +26,6 @@ app.get('/padres', (req,res) =>{
 app.listen(port, () =>{
     console.log(`Active in http://localhost:${port}`)
 })
+
+// Ejemplos código
+mariaDB_connector.query("Select * From padres");
