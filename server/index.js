@@ -23,16 +23,19 @@ app.post("/crearpadre", (req, res) => {
   const fechaNacimiento = req.body.fechaNacimiento;
   const cedula = req.body.cedula;
 
-  const response = insertData("padre", [
-    cedula,
-    primerNombre,
-    segundoNombre,
-    apellido,
-    genero,
-    direccion,
-    ciudad,
-    fechaNacimiento,
-  ]);
+  const response = insertData(
+    "padre(cedula, primerNombre, segundoNombre, apellido, genero, direccion, ciudad, fechaNacimiento)",
+    [
+      cedula,
+      primerNombre,
+      segundoNombre,
+      apellido,
+      genero,
+      direccion,
+      ciudad,
+      fechaNacimiento,
+    ]
+  );
   response
     .then((data) => {
       console.log("VALUES INSERTED");
@@ -42,6 +45,11 @@ app.post("/crearpadre", (req, res) => {
       console.log("ERROR INSERTING DATA");
       console.log(err);
     });
+});
+
+app.put("/update", (req, res) => {
+  const cedula = req.body.cedula;
+  const userData = req.body.userData;
 });
 
 app.get("/padres", (req, res) => {
@@ -60,28 +68,20 @@ app.get("/padres", (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-// async function updateData(table, column, valueColumn, id) {
+
+// async function updateData(table, primaryKey, data) {
 //   let conn;
 //   try {
 //     conn = await pool.getConnection();
-//     const result = await conn.query(
-//       `UPDATE SET ${table} ${column} = ? WHERE id = ? `,
-//       [valueColumn, cedula],
-//       (err, result) => {
-//         if (err) {
-//           console.log("ERROR UPDATE: ", err);
-//         } else {
-//           return result;
-//         }
-//       }
-//     );
+//     const results = await conn.query(`UPDATE ${table} SET ?`);
 //     // console.log(rows);
 //     conn.end();
-//     return result;
+//     return rows;
 //   } catch (error) {
 //     throw error;
 //   }
 // }
+
 async function getData(table) {
   let conn;
   try {
@@ -100,7 +100,7 @@ async function insertData(table, values) {
   try {
     conn = await pool.getConnection();
     const res = await conn.query(
-      `INSERT INTO ${table} value (?,?,?,?,?,?,?,?)`,
+      `INSERT INTO ${table} VALUES (?,?,?,?,?,?,?,?)`,
       values
     );
     conn.end();
