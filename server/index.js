@@ -201,10 +201,12 @@ app.put("/update", (req, res) => {
   ])
     .then((response) => {
       console.log("ACTUALIZADO CORRECTAMENTE EL USUARIO ", primerNombre);
+      res.sendStatus(200);
     })
     .catch((err) => {
       console.log("ERROR ACTUALIZANDO");
       console.log(err);
+      res.sendStatus(500);
     });
 });
 
@@ -227,10 +229,12 @@ app.put("/updateHijo", (req, res) => {
   ])
     .then((response) => {
       console.log("ACTUALIZADO CORRECTAMENTE EL USUARIO ", primerNombre);
+      res.sendStatus(200);
     })
     .catch((err) => {
       console.log("ERROR ACTUALIZANDO");
       console.log(err);
+      res.sendStatus(500);
     });
 });
 

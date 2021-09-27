@@ -77,6 +77,8 @@ export const Hijos = () => {
       hijode: hijode || updatedUser.hijode,
       updatedUser, // Se necesita en caso de que el usuario cambie la tarjetaIdentidad en el input o para comparar la informacion actual con la anterior
     }).then((response) => {
+      window.location.reload(false);
+      console.log("Refresqué")
       reload();
     });
   };

@@ -85,8 +85,9 @@ export const Padres = () => {
       fechaNacimiento: fechaNacimiento || updatedUser.fechaNacimiento,
       updatedUser, // Se necesita en caso de que el usuario cambie la cedula en el input o para comparar la informacion actual con la anterior
     }).then((response) => {
-      reload();
       window.location.reload(false);
+      reload();
+     
     });
   };
 
