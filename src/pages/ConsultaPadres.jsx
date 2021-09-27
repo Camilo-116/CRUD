@@ -19,6 +19,7 @@ const Consulta = () => {
   }
   useEffect(() => {
     reload();
+    // getPadres();
   }, []);
   const mostrarHijos = (id) => {
     setDisplay(true);
@@ -61,10 +62,6 @@ const Consulta = () => {
                     <span>Apellido</span>
                     <span>{file.apellido}</span>
                   </div>
-                  <div>
-                    <span>Género</span>
-                    <span>{file.genero}</span>
-                  </div>
                   <button
                     onClick={() => {
                       mostrarHijos(file.cedula);
@@ -83,17 +80,10 @@ const Consulta = () => {
             <div>
               {" "}
               {hijos.map((file) => {
-                return (
-                  <div className="hijo">
-                    <div>
-                      <span>Nombre</span> <span>{file.primerNombre}</span>
-                    </div>
-                    <div>
-                      <span>Tarjeta identidad</span>
-                      <span>{file.tarjetaIdentidad}</span>
-                    </div>
-                  </div>
-                );
+                return <div className="hijo">
+                  <div><span>Nombre</span> <span>{file.primerNombre}</span></div>
+                  <div><span>Tarjeta identidad</span><span>{file.tarjetaIdentidad}</span></div>
+                </div>;
               })}{" "}
             </div>
           ) : (

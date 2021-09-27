@@ -100,8 +100,8 @@ li div span:first-child{
 .hijo{
     display: flex;
     flex-direction: row;
-    align-content: flex-start;
     border-bottom:1px solid rgb(61, 60, 60);
+    justify-content: center;
 }
 .main div .hijo:first-child{
     border-top: 1px solid rgb(61, 60, 60);
@@ -111,7 +111,6 @@ li div span:first-child{
     flex-direction: column;
     
 }
-
 
 .hijo div span:first-child{
     text-transform: uppercase;
