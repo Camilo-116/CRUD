@@ -7,7 +7,7 @@ const Consulta = () => {
   const [hijos, setHijos] = useState([]);
   const [shouldDisplay, setDisplay] = useState(false);
   async function reload() {
-    Axios.get("http://localhost:8888/padres")
+    Axios.get("http://localhost:3004/padres")
       .then((response) => {
         console.log("RESPONSE FROM SERVER", response.data);
         setListaPadres(response.data);
@@ -19,11 +19,10 @@ const Consulta = () => {
   }
   useEffect(() => {
     reload();
-    // getPadres();
   }, []);
   const mostrarHijos = (id) => {
     setDisplay(true);
-    Axios.get(`http://localhost:8888/padres/${id}`)
+    Axios.get(`http://localhost:3004/padres/${id}`)
       .then((response) => {
         console.log("RESPONSE FROM SERVER", response.data);
         setHijos(response.data);
@@ -62,6 +61,10 @@ const Consulta = () => {
                     <span>Apellido</span>
                     <span>{file.apellido}</span>
                   </div>
+                  <div>
+                    <span>Género</span>
+                    <span>{file.genero}</span>
+                  </div>
                   <button
                     onClick={() => {
                       mostrarHijos(file.cedula);
@@ -80,10 +83,17 @@ const Consulta = () => {
             <div>
               {" "}
               {hijos.map((file) => {
-                return <div className="hijo">
-                  <div><span>Nombre</span> <span>{file.primerNombre}</span></div>
-                  <div><span>Tarjeta identidad</span><span>{file.tarjetaIdentidad}</span></div>
-                </div>;
+                return (
+                  <div className="hijo">
+                    <div>
+                      <span>Nombre</span> <span>{file.primerNombre}</span>
+                    </div>
+                    <div>
+                      <span>Tarjeta identidad</span>
+                      <span>{file.tarjetaIdentidad}</span>
+                    </div>
+                  </div>
+                );
               })}{" "}
             </div>
           ) : (
