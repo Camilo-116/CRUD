@@ -1,13 +1,14 @@
 const express = require("express");
 const app = express();
 const mariadb = require("mariadb");
+const querySelector = require("./querys")
 
 const cors = require("cors");
 
 const config = mariadb.createPool({
-  host: "winhost",
+  host: "localhost",
   user: "root",
-  password: "010717",
+  password: "Josemicod5",
   database: "icbf",
   connectionLimit: 5,
   acquireTimeout: 300,
@@ -99,6 +100,21 @@ async function insertHijo(table, values) {
     throw error;
   }
 }
+
+app.get("/:name(c1|c2|c3)", (req,res) => {
+  var type = req.params.name[1];
+  const results = getQuery(type);
+  results
+    .then((data) =>{
+      res.send(data);
+    })
+    .catch((error) => {
+      console.log("ERROR ON SERVER");
+      console.log(error);
+      res.status(500);
+    }); 
+});
+
 app.post("/crearhijo", (req, res) => {
   const {
     tarjetaIdentidad,
@@ -215,19 +231,6 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// async function updateData(table, primaryKey, data) {
-//   let conn;
-//   try {
-//     conn = await pool.getConnection();
-//     const results = await conn.query(`UPDATE ${table} SET ?`);
-//     // console.log(rows);
-//     conn.end();
-//     return rows;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
 async function getData(table) {
   let conn;
   try {
@@ -236,6 +239,18 @@ async function getData(table) {
     conn.end();
     return rows;
   } catch (error) {
+    throw error;
+  }
+}
+
+async function getQuery(type){
+  let conn;
+  try{
+    conn = await config.getConnection();
+    const rows = await conn.query(querySelector(type))
+    conn.end();
+    return rows;
+  }catch(error){
     throw error;
   }
 }
