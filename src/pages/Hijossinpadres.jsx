@@ -1,28 +1,33 @@
 import { React, useState, useEffect } from "react";
 import "../styles/Consultas.css";
+import background from "../images/baby-boy.svg";
 import Axios from "axios";
 
-const Hijossinpadres = () => {
-  const [hijos, setHijos] = useState([]);
+const HijosSinPadres = () => {
+ 
+  const [listaHijos, setListaHijos] = useState([]);
   async function reload() {
-    Axios.get("http://localhost:3004/hijos")
+    Axios.get("http://localhost:3004/c2")
       .then((response) => {
         console.log("RESPONSE FROM SERVER", response.data);
-        setHijos(response.data);
+        setListaHijos(response.data);
       })
       .catch((err) => {
         console.log("ERROR ON GET HIJOS ");
         console.error(err);
       });
   }
+
   useEffect(() => {
     reload();
+
   }, []);
   return (
     <div className="main2">
       <h1>Hijos sin padre </h1>
+      <div className='list'>
       <ul>
-        {hijos.map((file) => {
+        {listaHijos.map((file) => {
           return (
             <li>
               <div>
@@ -49,8 +54,10 @@ const Hijossinpadres = () => {
           );
         })}
       </ul>
+      </div>
+      <img src={background} alt="" className="background" />
     </div>
   );
 };
 
-export default Hijossinpadres;
+export default HijosSinPadres;

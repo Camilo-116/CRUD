@@ -81,6 +81,19 @@ export const Hijos = () => {
     });
   };
 
+  
+  const deleteHijo= (tarjetaIdentidad) => {
+    Axios.delete(`http://localhost:3004/deletehijo/${tarjetaIdentidad}`)
+      .then((response) => {
+        console.log("Eliminado correctamente");
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        console.log("ERROR ELIMINANDO");
+        console.log(err);
+      });
+  };
+
   async function reload() {
     Axios.get("http://localhost:3004/hijos")
       .then((response) => {
@@ -92,6 +105,7 @@ export const Hijos = () => {
         console.error(err);
       });
   }
+
 
   useEffect(() => {
     reload();
@@ -224,6 +238,7 @@ export const Hijos = () => {
           ]}
           data={listaHijos}
           setNeedUpdate={setNeedUpdate}
+          handleDeleteUser={deleteHijo}
           handleUpdateUser={handleUpdateUser}
           notPrint={4}
         />

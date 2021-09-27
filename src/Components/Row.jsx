@@ -3,6 +3,7 @@ import { React, useState } from "react";
 const Row = ({
   data,
   setNeedUpdate,
+  handleDeleteUser,
   handleUpdateUser,
   collection,
   notPrint,
@@ -10,9 +11,10 @@ const Row = ({
   return (
     <tr>
       <td class="select">
-        <a class="button" href="">
+        <button class="button" onClick={() => {handleDeleteUser(collection.cedula || collection.tarjetaIdentidad)}}>
           ELIMINAR
-        </a>
+        </button>
+
         <button
           onClick={() => {
             handleUpdateUser(collection);

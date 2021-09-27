@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "../styles/Consultas.css";
+import background from "../images/background1.svg";
 import Axios from "axios";
 
 const Consulta = () => {
@@ -62,6 +63,10 @@ const Consulta = () => {
                     <span>Apellido</span>
                     <span>{file.apellido}</span>
                   </div>
+                  <div>
+                    <span>Género</span>
+                    <span>{file.genero}</span>
+                  </div>
                   <button
                     onClick={() => {
                       mostrarHijos(file.cedula);
@@ -87,10 +92,11 @@ const Consulta = () => {
               })}{" "}
             </div>
           ) : (
-            <span> wenas</span>
+            <span></span>
           )}
         </div>
       </div>
+      <img src={background} alt="" className="background" />
     </div>
   );
 };

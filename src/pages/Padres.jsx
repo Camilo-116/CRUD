@@ -224,9 +224,9 @@ export const Padres = () => {
           ]}
           data={listaPadres}
           setNeedUpdate={setNeedUpdate}
+          handleDeleteUser={deletePadre}
           handleUpdateUser={handleUpdateUser}
           notPrint={7}
-          handleDeleteUser={deletePadre}
         />
       </div>
     </main>
