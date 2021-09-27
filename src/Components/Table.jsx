@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "../styles/Table.css";
 import Row from "./Row";
-const Table = ({ tableheads, data, setNeedUpdate, handleUpdateUser }) => {
+const Table = ({
+  tableheads,
+  data,
+  setNeedUpdate,
+  handleUpdateUser,
+  notPrint,
+}) => {
   // const [rows, setRows] = useState([]);
 
   return (
@@ -26,6 +32,7 @@ const Table = ({ tableheads, data, setNeedUpdate, handleUpdateUser }) => {
               setNeedUpdate
               handleUpdateUser={handleUpdateUser}
               ced={row.cedula}
+              notPrint={notPrint}
             />
           );
         })}

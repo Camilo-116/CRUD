@@ -30,8 +30,20 @@ export const Padres = () => {
     setNeedUpdate(true);
     console.log("UPDATING THE USER: ", updatedUser);
   }
+
+  const deletePadre = (cedula) => {
+    Axios.delete(`http://localhost:3004/deletepadre/${cedula}`)
+      .then((response) => {
+        console.log("Eliminado correctamente");
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        console.log("ERROR ELIMINANDO");
+        console.log(err);
+      });
+  };
   const addPadre = () => {
-    Axios.post("http://localhost:8888/crearpadre", {
+    Axios.post("http://localhost:3004/crearpadre", {
       cedula,
       primerNombre,
       segundoNombre,
@@ -40,26 +52,29 @@ export const Padres = () => {
       direccion,
       ciudad,
       fechaNacimiento,
-    }).then((response) => {
-      console.log("Success");
-      setListaPadres([
-        ...listaPadres,
-        {
-          cedula,
-          primerNombre,
-          segundoNombre,
-          apellido,
-          genero,
-          direccion,
-          ciudad,
-          fechaNacimiento,
-        },
-      ]);
-    }).catch((er) => console.log(er));
+    })
+      .then((response) => {
+        console.log("Success");
+        setListaPadres([
+          ...listaPadres,
+          {
+            cedula,
+            primerNombre,
+            segundoNombre,
+            apellido,
+            genero,
+            direccion,
+            ciudad,
+            fechaNacimiento,
+          },
+        ]);
+        window.location.reload(false);
+      })
+      .catch((er) => console.log(er));
   };
 
   const updatePadre = () => {
-    Axios.put("http://localhost:8888/update", {
+    Axios.put("http://localhost:3004/update", {
       cedula: cedula || updatedUser.cedula,
       primerNombre: primerNombre || updatedUser.primerNombre,
       segundoNombre: segundoNombre || updatedUser.segundoNombre,
@@ -71,11 +86,12 @@ export const Padres = () => {
       updatedUser, // Se necesita en caso de que el usuario cambie la cedula en el input o para comparar la informacion actual con la anterior
     }).then((response) => {
       reload();
+      window.location.reload(false);
     });
   };
 
-  async function reload(){
-    Axios.get("http://localhost:8888/padres")
+  async function reload() {
+    Axios.get("http://localhost:3004/padres")
       .then((response) => {
         console.log("RESPONSE FROM SERVER", response.data);
         setListaPadres(response.data);
@@ -83,12 +99,11 @@ export const Padres = () => {
       .catch((err) => {
         console.log("ERROR ON GET PADRES ");
         console.error(err);
-      })
+      });
   }
 
   useEffect(() => {
-      reload();
-    // getPadres();
+    reload();
   }, []);
   const registrar = (e) => {
     e.preventDefault();
@@ -169,7 +184,14 @@ export const Padres = () => {
           </div>
           <div>
             <label htmlFor="genero">Genero</label>
-            <select name="genero" id="genero" onChange={(e) => {let genero = e.target.value;setGenero(genero === "Masculino" ? 0 : 1);}}>
+            <select
+              name="genero"
+              id="genero"
+              onChange={(e) => {
+                let genero = e.target.value;
+                setGenero(genero === "Masculino" ? 0 : 1);
+              }}
+            >
               <option value="Masculino">Masculino</option>
               <option value="Femenino">Femenino</option>
             </select>
@@ -177,7 +199,12 @@ export const Padres = () => {
         </div>
 
         <input type="submit" value="ENVIAR"></input>
-        <button onClick={updatePadre}className="button-update"disabled={!needUpdate} type="button">
+        <button
+          onClick={updatePadre}
+          className="button-update"
+          disabled={!needUpdate}
+          type="button"
+        >
           ACTUALIZAR
         </button>
         <img src={background} alt="" className="background" />
@@ -198,6 +225,8 @@ export const Padres = () => {
           data={listaPadres}
           setNeedUpdate={setNeedUpdate}
           handleUpdateUser={handleUpdateUser}
+          notPrint={7}
+          handleDeleteUser={deletePadre}
         />
       </div>
     </main>
