@@ -6,7 +6,6 @@ import Axios from "axios";
 const Consulta = () => {
   const [listaPadres, setListaPadres] = useState([]);
   const [hijos, setHijos] = useState([]);
-  const [shouldDisplay, setDisplay] = useState(false);
   async function reload() {
     Axios.get("http://localhost:3004/padres")
       .then((response) => {
@@ -23,7 +22,6 @@ const Consulta = () => {
     // getPadres();
   }, []);
   const mostrarHijos = (id) => {
-    setDisplay(true);
     Axios.get(`http://localhost:3004/padres/${id}`)
       .then((response) => {
         console.log("RESPONSE FROM SERVER", response.data);
@@ -34,6 +32,7 @@ const Consulta = () => {
         console.log("ERROR ON GET PADRES ");
         console.error(err);
       });
+      
   };
   return (
     <div>
@@ -81,9 +80,8 @@ const Consulta = () => {
         </div>
         <div>
           <h2>Hijos del padre seleccionado</h2>
-          {shouldDisplay ? (
+          {hijos.length > 0  ? (
             <div>
-              {" "}
               {hijos.map((file) => {
                 return <div className="hijo">
                   <div><span>Nombre</span> <span>{file.primerNombre}</span></div>
@@ -92,7 +90,9 @@ const Consulta = () => {
               })}{" "}
             </div>
           ) : (
-            <span></span>
+            <div className="hijo">
+            <div><span>El padre seleccionado no tiene hijos.</span></div>
+          </div>
           )}
         </div>
       </div>
