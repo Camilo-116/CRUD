@@ -29,15 +29,15 @@ const Home = () => {
             <img src={babyBoy} alt="asd" />
             <h6 className="card-title">Tabla de Hijos</h6>
           </Link>
-          <Link className="opciones--card">
+          <Link to="/consultapadres"className="opciones--card">
             <img src={family} alt="" />
             <h6 className="card-title">Mostrar padres disponibles </h6>
           </Link>
-          <Link className="opciones--card">
+          <Link to="/consultapadressinhijos" className="opciones--card">
             <img src={man} alt="" />
             <h6 className="card-title">Padres sin hijos </h6>
           </Link>
-          <Link className="opciones--card">
+          <Link to="/consultahijossinpadre" className="opciones--card">
             <img src={babyCry} alt="" />
             <h6 className="card-title">Hijos sin padre</h6>
           </Link>
