@@ -30,6 +30,18 @@ export const Padres = () => {
     setNeedUpdate(true);
     console.log("UPDATING THE USER: ", updatedUser);
   }
+
+  const deletePadre = (cedula) => {
+    Axios.delete(`http://localhost:3004/deletepadre/${cedula}`)
+      .then((response) => {
+        console.log("Eliminado correctamente");
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        console.log("ERROR ELIMINANDO");
+        console.log(err);
+      });
+  };
   const addPadre = () => {
     Axios.post("http://localhost:3004/crearpadre", {
       cedula,
@@ -56,6 +68,7 @@ export const Padres = () => {
             fechaNacimiento,
           },
         ]);
+        window.location.reload(false);
       })
       .catch((er) => console.log(er));
   };
@@ -73,6 +86,7 @@ export const Padres = () => {
       updatedUser, // Se necesita en caso de que el usuario cambie la cedula en el input o para comparar la informacion actual con la anterior
     }).then((response) => {
       reload();
+      window.location.reload(false);
     });
   };
 
@@ -212,6 +226,7 @@ export const Padres = () => {
           setNeedUpdate={setNeedUpdate}
           handleUpdateUser={handleUpdateUser}
           notPrint={7}
+          handleDeleteUser={deletePadre}
         />
       </div>
     </main>
