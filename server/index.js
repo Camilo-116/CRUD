@@ -8,7 +8,7 @@ const cors = require("cors");
 const config = mariadb.createPool({
   host: "localhost",
   user: "root",
-  password: "Dhit27979781",
+  password: "Josemicod5",
   database: "icbf",
   connectionLimit: 5,
   acquireTimeout: 300,
