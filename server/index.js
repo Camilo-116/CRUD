@@ -8,7 +8,7 @@ const cors = require("cors");
 const config = mariadb.createPool({
   host: "localhost",
   user: "root",
-  password: "Dhit27979781",
+  password: "Josemicod5",
   database: "icbf",
   connectionLimit: 5,
   acquireTimeout: 300,
@@ -86,6 +86,7 @@ app.post("/crearpadre", (req, res) => {
       console.log(err);
     });
 });
+
 async function insertHijo(table, values) {
   let conn;
   try {
@@ -216,7 +217,7 @@ app.get("/padres", (req, res) => {
 });
 
 app.get("/padres/:cedula", (req, res) => {
-  const cedula=req.params.cedula;
+  const cedula = req.params.cedula;
   const results = getDataC1("hijo",cedula);
   results
     .then((data) => {
@@ -225,7 +226,8 @@ app.get("/padres/:cedula", (req, res) => {
     })
     .catch((error) => {
       console.log("ERROR ON SERVER");
-    });});
+    });
+  });
 
 app.get("/hijos", (req, res) => {
   const results = getData("hijo");
@@ -239,6 +241,7 @@ app.get("/hijos", (req, res) => {
       res.status(500);
     });
 });
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
@@ -262,7 +265,9 @@ async function getDataC1(table,cedula) {
     const rows = await conn.query(`SELECT * FROM ${table} WHERE hijode = ${cedula.toString()}`);
     conn.end();
     return rows;
-  } catch (error) {}}
+  } catch (error) {}
+}
+
 async function getQuery(type){
   let conn;
   try{

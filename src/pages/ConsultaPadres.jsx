@@ -7,7 +7,7 @@ const Consulta = () => {
   const [hijos, setHijos] = useState([]);
   const [shouldDisplay, setDisplay] = useState(false);
   async function reload() {
-    Axios.get("http://localhost:8888/padres")
+    Axios.get("http://localhost:3004/padres")
       .then((response) => {
         console.log("RESPONSE FROM SERVER", response.data);
         setListaPadres(response.data);
@@ -23,7 +23,7 @@ const Consulta = () => {
   }, []);
   const mostrarHijos = (id) => {
     setDisplay(true);
-    Axios.get(`http://localhost:8888/padres/${id}`)
+    Axios.get(`http://localhost:3004/padres/${id}`)
       .then((response) => {
         console.log("RESPONSE FROM SERVER", response.data);
         setHijos(response.data);

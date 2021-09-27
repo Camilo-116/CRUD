@@ -101,6 +101,7 @@ li div span:first-child{
     display: flex;
     flex-direction: row;
     border-bottom:1px solid rgb(61, 60, 60);
+    justify-content: center;
 }
 .main div .hijo:first-child{
     border-top: 1px solid rgb(61, 60, 60);

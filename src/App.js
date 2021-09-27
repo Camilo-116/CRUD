@@ -4,8 +4,8 @@ import { Padres } from "./pages/Padres";
 import { Hijos } from "./pages/Hijos";
 import Home from "./pages/Home";
 import Consulta from "./pages/ConsultaPadres";
-import Padressinhijos from "./pages/Padresinhijos";
-import Hijossinpadres from "./pages/Hijossinpadres";
+import Padressinhijos from "./pages/PadresSinHijos";
+import Hijossinpadres from "./pages/HijosSinPadres";
 
 function App() {
   return (
