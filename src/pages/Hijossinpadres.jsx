@@ -4,7 +4,6 @@ import background from "../images/baby-boy.svg";
 import Axios from "axios";
 
 const HijosSinPadres = () => {
- 
   const [listaHijos, setListaHijos] = useState([]);
   async function reload() {
     Axios.get("http://localhost:3004/c2")
