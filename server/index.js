@@ -1,14 +1,39 @@
 const express = require("express");
 const app = express();
 const mariadb = require("mariadb");
+
 const cors = require("cors");
-const port = 8888;
-const pool = mariadb.createPool({
+
+const config = mariadb.createPool({
+  host: "localhost",
   user: "root",
-  host: "winhost",
-  password: "010717",
+  password: "Josemicod5",
   database: "icbf",
+  connectionLimit: 5,
+  acquireTimeout: 300,
 });
+
+async function updatePadre(primaryKey, data) {
+  let conn;
+  try {
+    conn = await config.getConnection();
+    const results = await conn.query(
+      `UPDATE padre SET primerNombre = ?, segundoNombre = ? , apellido = ?, genero = ? , direccion = ?, ciudad = ?, fechaNacimiento = ? WHERE cedula = ${primaryKey.toString()};`,
+      data
+    );
+
+    conn.end();
+    return results;
+  } catch (error) {
+    throw error;
+  }
+}
+
+const {
+  default: axios
+} = require("axios");
+
+const port = 8888;
 
 app.use(cors());
 app.use(express.json());
@@ -48,8 +73,33 @@ app.post("/crearpadre", (req, res) => {
 });
 
 app.put("/update", (req, res) => {
-  const cedula = req.body.cedula;
-  const userData = req.body.userData;
+  const {
+    cedula,
+    primerNombre,
+    segundoNombre,
+    apellido,
+    genero,
+    direccion,
+    ciudad,
+    fechaNacimiento,
+    updatedUser,
+  } = req.body;
+  updatePadre(updatedUser.cedula.toString(), [
+      primerNombre,
+      segundoNombre,
+      apellido,
+      genero,
+      direccion,
+      ciudad,
+      fechaNacimiento,
+    ])
+    .then((response) => {
+      console.log("ACTUALIZADO CORRECTAMENTE EL USUARIO ", primerNombre);
+    })
+    .catch((err) => {
+      console.log("ERROR ACTUALIZANDO");
+      console.log(err);
+    });
 });
 
 app.get("/padres", (req, res) => {
@@ -85,9 +135,8 @@ app.listen(port, () => {
 async function getData(table) {
   let conn;
   try {
-    conn = await pool.getConnection();
+    conn = await config.getConnection();
     const rows = await conn.query(`SELECT * FROM ${table}`);
-    // console.log(rows);
     conn.end();
     return rows;
   } catch (error) {
@@ -98,7 +147,7 @@ async function getData(table) {
 async function insertData(table, values) {
   let conn;
   try {
-    conn = await pool.getConnection();
+    conn = await config.getConnection();
     const res = await conn.query(
       `INSERT INTO ${table} VALUES (?,?,?,?,?,?,?,?)`,
       values

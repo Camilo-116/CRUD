@@ -12,7 +12,7 @@ export const Padres = () => {
   const [cedula, setCedula] = useState(0);
   const [ciudad, setCiudad] = useState("");
   const [direccion, setDireccion] = useState("");
-  const [genero, setGenero] = useState("");
+  const [genero, setGenero] = useState(0);
   const [fechaNacimiento, setFechaNacimiento] = useState("");
 
   //LOGIC
@@ -55,23 +55,39 @@ export const Padres = () => {
           fechaNacimiento,
         },
       ]);
+    }).catch((er) => console.log(er));
+  };
+
+  const updatePadre = () => {
+    Axios.put("http://localhost:8888/update", {
+      cedula: cedula || updatedUser.cedula,
+      primerNombre: primerNombre || updatedUser.primerNombre,
+      segundoNombre: segundoNombre || updatedUser.segundoNombre,
+      apellido: apellido || updatedUser.apellido,
+      genero: genero || updatedUser.genero,
+      direccion: direccion || updatedUser.direccion,
+      ciudad: ciudad || updatedUser.ciudad,
+      fechaNacimiento: fechaNacimiento || updatedUser.fechaNacimiento,
+      updatedUser, // Se necesita en caso de que el usuario cambie la cedula en el input o para comparar la informacion actual con la anterior
+    }).then((response) => {
+      reload();
     });
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      Axios.get("http://localhost:8888/padres")
-        .then((response) => {
-          console.log("RESPONSE FROM SERVER", response.data);
+  async function reload(){
+    Axios.get("http://localhost:8888/padres")
+      .then((response) => {
+        console.log("RESPONSE FROM SERVER", response.data);
+        setListaPadres(response.data);
+      })
+      .catch((err) => {
+        console.log("ERROR ON GET PADRES ");
+        console.error(err);
+      })
+  }
 
-          setListaPadres(response.data);
-        })
-        .catch((err) => {
-          console.log("ERROR ON GET PADRES ");
-          console.error(err);
-        });
-    };
-    fetchData();
+  useEffect(() => {
+      reload();
     // getPadres();
   }, []);
   const registrar = (e) => {
@@ -137,7 +153,7 @@ export const Padres = () => {
           onChange={(e) => setCedula(e.target.value)}
           name="cedula"
           placeholder="Ingrese la cedula"
-          disabled={!needUpdate}
+          disabled={needUpdate}
         />
         <div>
           <div className="special-form">
@@ -152,8 +168,8 @@ export const Padres = () => {
             />
           </div>
           <div>
-            <label htmlFor="fechaNacimiento">Genero</label>
-            <select name="genero" id="genero">
+            <label htmlFor="genero">Genero</label>
+            <select name="genero" id="genero" onChange={(e) => {let genero = e.target.value;setGenero(genero === "Masculino" ? 0 : 1);}}>
               <option value="Masculino">Masculino</option>
               <option value="Femenino">Femenino</option>
             </select>
@@ -161,7 +177,7 @@ export const Padres = () => {
         </div>
 
         <input type="submit" value="ENVIAR"></input>
-        <button className="button-update" disabled={!needUpdate}>
+        <button onClick={updatePadre}className="button-update"disabled={!needUpdate} type="button">
           ACTUALIZAR
         </button>
         <img src={background} alt="" className="background" />
@@ -171,7 +187,7 @@ export const Padres = () => {
           tableheads={[
             "Acciones",
             "CEDULA",
-            "Nombre de pila",
+            "Primer Nombre",
             "Segundo nombre",
             "Apellido",
             "Genero",
