@@ -1,6 +1,12 @@
 import { React, useState } from "react";
 
-const Row = ({ data, setNeedUpdate, handleUpdateUser, ced, collection }) => {
+const Row = ({
+  data,
+  setNeedUpdate,
+  handleUpdateUser,
+  collection,
+  notPrint,
+}) => {
   return (
     <tr>
       <td class="select">
@@ -16,7 +22,7 @@ const Row = ({ data, setNeedUpdate, handleUpdateUser, ced, collection }) => {
         </button>
       </td>
       {data.map((row, index) => {
-        return index === 7 ? null : <td key={index}>{row}</td>;
+        return index === notPrint ? null : <td key={index}>{row}</td>;
       })}
       {/* <td data-title="name">Iacob Geaorgescu</td>
       <td data-title="id">e-mail@test-email.com</td> */}
