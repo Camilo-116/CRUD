@@ -8,7 +8,7 @@ const cors = require("cors");
 const config = mariadb.createPool({
   host: "localhost",
   user: "root",
-  password: "Josemicod5",
+  password: "Dhit27979781",
   database: "icbf",
   connectionLimit: 5,
   acquireTimeout: 300,
@@ -215,6 +215,18 @@ app.get("/padres", (req, res) => {
     });
 });
 
+app.get("/padres/:cedula", (req, res) => {
+  const cedula=req.params.cedula;
+  const results = getDataC1("hijo",cedula);
+  results
+    .then((data) => {
+      res.send(data);
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log("ERROR ON SERVER");
+    });});
+
 app.get("/hijos", (req, res) => {
   const results = getData("hijo");
   results
@@ -243,6 +255,14 @@ async function getData(table) {
   }
 }
 
+async function getDataC1(table,cedula) {
+  let conn;
+  try {
+    conn = await config.getConnection();
+    const rows = await conn.query(`SELECT * FROM ${table} WHERE hijode = ${cedula.toString()}`);
+    conn.end();
+    return rows;
+  } catch (error) {}}
 async function getQuery(type){
   let conn;
   try{
@@ -254,6 +274,7 @@ async function getQuery(type){
     throw error;
   }
 }
+
 
 async function insertData(table, values) {
   let conn;
