@@ -1,12 +1,12 @@
 import { React, useState, useEffect } from "react";
 import "../styles/Consultas.css";
-import background from "../images/man-happy.svg";
+import background from "../images/homeback.svg";
 import Axios from "axios";
 
-const Padressinhijos = () => {
+const NumeroHijos = () => {
   const [listaPadres, setListaPadres] = useState([]);
   async function reload() {
-    Axios.get("http://localhost:3004/c1")
+    Axios.get("http://localhost:3004/c3")
       .then((response) => {
         console.log("RESPONSE FROM SERVER", response.data);
         setListaPadres(response.data);
@@ -21,7 +21,7 @@ const Padressinhijos = () => {
   }, []);
   return (
     <div className='main2'>
-      <h1>Padres sin hijos</h1>
+      <h1>Padres y número de hijos</h1>
       <div className='list'>
       <ul>
         {listaPadres.map((file) => {
@@ -47,6 +47,10 @@ const Padressinhijos = () => {
                     <span>Género</span>
                     <span>{file.genero}</span>
                   </div>
+                  <div>
+                    <span>Hijos</span>
+                    <span>{file.numHijos}</span>
+                  </div>
             </li>
           );
         })}
@@ -59,4 +63,4 @@ const Padressinhijos = () => {
 
 
 
-export default Padressinhijos;
+export default NumeroHijos;

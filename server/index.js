@@ -8,7 +8,7 @@ const cors = require("cors");
 const config = mariadb.createPool({
   host: "localhost",
   user: "root",
-  password: "Josemicod5",
+  password: "Dhit27979781",
   database: "icbf",
   connectionLimit: 5,
   acquireTimeout: 300,
@@ -102,6 +102,37 @@ async function insertHijo(table, values) {
   }
 }
 
+async function deletePadre(cedula) {
+  let conn;
+  try {
+    conn = await config.getConnection();
+    const result = await conn.query(
+      `DELETE FROM padre WHERE cedula = ${cedula.toString()}`,
+      
+    );
+    conn.end();
+    return result;
+  } catch (error) {
+   
+  }
+}
+
+async function deleteHijo(tarjetaIdentidad) {
+  let conn;
+  try {
+    conn = await config.getConnection();
+    const result = await conn.query(
+      `DELETE FROM hijo WHERE tarjetaIdentidad = ${tarjetaIdentidad.toString()}`,
+      
+    );
+    conn.end();
+    return result;
+  } catch (error) {
+   
+  }
+}
+
+
 app.get("/:name(c1|c2|c3)", (req,res) => {
   var type = req.params.name[1];
   const results = getQuery(type);
@@ -110,7 +141,7 @@ app.get("/:name(c1|c2|c3)", (req,res) => {
       res.send(data);
     })
     .catch((error) => {
-      console.log("ERROR ON SERVER");
+      console.log("ERROR ON SERVER n");
       console.log(error);
       res.status(500);
     }); 
@@ -170,10 +201,12 @@ app.put("/update", (req, res) => {
   ])
     .then((response) => {
       console.log("ACTUALIZADO CORRECTAMENTE EL USUARIO ", primerNombre);
+      res.sendStatus(200);
     })
     .catch((err) => {
       console.log("ERROR ACTUALIZANDO");
       console.log(err);
+      res.sendStatus(500);
     });
 });
 
@@ -196,10 +229,12 @@ app.put("/updateHijo", (req, res) => {
   ])
     .then((response) => {
       console.log("ACTUALIZADO CORRECTAMENTE EL USUARIO ", primerNombre);
+      res.sendStatus(200);
     })
     .catch((err) => {
       console.log("ERROR ACTUALIZANDO");
       console.log(err);
+      res.sendStatus(500);
     });
 });
 
@@ -210,7 +245,7 @@ app.get("/padres", (req, res) => {
       res.send(data);
     })
     .catch((error) => {
-      console.log("ERROR ON SERVER");
+      console.log("ERROR ON SERVER p");
       console.log(error);
       res.status(500);
     });
@@ -225,7 +260,7 @@ app.get("/padres/:cedula", (req, res) => {
       res.sendStatus(200);
     })
     .catch((error) => {
-      console.log("ERROR ON SERVER");
+      console.log("ERROR ON SERVER c");
     });
   });
 
@@ -239,6 +274,38 @@ app.get("/hijos", (req, res) => {
       console.log("ERROR ON SERVER getting hijos");
       console.log(error);
       res.status(500);
+    });
+});
+
+app.delete("/deletepadre/:cedula", (req, res) => {
+  console.log("ENTRE");
+  const cedula = req.params.cedula;
+  const response = deletePadre(cedula);
+  response
+    .then((result) => {
+      console.log("ELIMINADO CORRECTAMENTE EL PADRE: ", cedula);
+      res.send(200);
+    })
+    .catch((err) => {
+      console.log("Error eliminando a ", cedula);
+      console.log(err);
+      res.send(500);
+    });
+});
+
+app.delete("/deletehijo/:tarjetaIdentidad", (req, res) => {
+  console.log("ENTRE");
+  const tarjetaIdentidad = req.params.tarjetaIdentidad;
+  const response = deleteHijo(tarjetaIdentidad);
+  response
+    .then((result) => {
+      console.log("ELIMINADO CORRECTAMENTE EL PADRE: ", tarjetaIdentidad);
+      res.send(200);
+    })
+    .catch((err) => {
+      console.log("Error eliminando a ", tarjetaIdentidad);
+      console.log(err);
+      res.send(500);
     });
 });
 
@@ -292,6 +359,6 @@ async function insertData(table, values) {
     conn.end();
     return res;
   } catch (error) {
-    throw error;
+    throw error
   }
 }

@@ -35,9 +35,13 @@ const Home = () => {
             <img src={man} alt="" />
             <h6 className="card-title">Padres sin hijos </h6>
           </Link>
-          <Link to="/consultahijossinpadre" className="opciones--card">
+          <Link to="/consultahijos" className="opciones--card">
             <img src={babyCry} alt="" />
             <h6 className="card-title">Hijos sin padre</h6>
+          </Link>
+          <Link to="/consultanumhijos" className="opciones--card">
+            <img src={homeback} alt="" />
+            <h6 className="card-title">Número de hijos</h6>
           </Link>
         </div>
         <img src={homeback} alt="" className="background" />

@@ -5,6 +5,7 @@ const Table = ({
   tableheads,
   data,
   setNeedUpdate,
+  handleDeleteUser,
   handleUpdateUser,
   notPrint,
 }) => {
@@ -30,6 +31,7 @@ const Table = ({
               data={Object.values(row)}
               collection={row}
               setNeedUpdate
+              handleDeleteUser={handleDeleteUser}
               handleUpdateUser={handleUpdateUser}
               ced={row.cedula}
               notPrint={notPrint}

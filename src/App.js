@@ -5,7 +5,8 @@ import { Hijos } from "./pages/Hijos";
 import Home from "./pages/Home";
 import Consulta from "./pages/ConsultaPadres";
 import Padressinhijos from "./pages/PadresSinHijos";
-import Hijossinpadres from "./pages/HijosSinPadres";
+import HijosSinPadres from "./pages/HijosSinPadres";
+import NumeroHijos from "./pages/NumeroHijos";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
         <Route exact path="/hijos" component={Hijos} />
         <Route exact path= "/consultapadres" component={Consulta}/>
         <Route exact path= "/consultapadressinhijos" component={Padressinhijos}/>
-        <Route exact path= "/consultahijosinpadres" component={Hijossinpadres}/>
+        <Route exact path= "/consultahijos" component={HijosSinPadres}/>
+        <Route exact path= "/consultanumhijos" component={NumeroHijos}/>
 
       </div>
     </HashRouter>

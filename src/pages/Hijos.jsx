@@ -77,8 +77,23 @@ export const Hijos = () => {
       hijode: hijode || updatedUser.hijode,
       updatedUser, // Se necesita en caso de que el usuario cambie la tarjetaIdentidad en el input o para comparar la informacion actual con la anterior
     }).then((response) => {
+      window.location.reload(false);
+      console.log("Refresqué")
       reload();
     });
+  };
+
+  
+  const deleteHijo= (tarjetaIdentidad) => {
+    Axios.delete(`http://localhost:3004/deletehijo/${tarjetaIdentidad}`)
+      .then((response) => {
+        console.log("Eliminado correctamente");
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        console.log("ERROR ELIMINANDO");
+        console.log(err);
+      });
   };
 
   async function reload() {
@@ -92,6 +107,7 @@ export const Hijos = () => {
         console.error(err);
       });
   }
+
 
   useEffect(() => {
     reload();
@@ -224,6 +240,7 @@ export const Hijos = () => {
           ]}
           data={listaHijos}
           setNeedUpdate={setNeedUpdate}
+          handleDeleteUser={deleteHijo}
           handleUpdateUser={handleUpdateUser}
           notPrint={4}
         />
