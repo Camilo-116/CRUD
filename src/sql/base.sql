@@ -24,4 +24,4 @@ CREATE TABLE hijo (
 	edad INTEGER AS (YEAR(CURRENT_DATE) - YEAR(fechaNacimiento)),
 	hijode VARCHAR(20),
 	PRIMARY KEY(tarjetaIdentidad),
-	FOREIGN KEY (hijode) REFERENCES padre(cedula));
+	FOREIGN KEY (hijode) REFERENCES padre(cedula)) ON DELETE SET NULL;
